@@ -9,7 +9,8 @@ sudo apt-get update &&
 sudo apt-get install google-chrome-stable
 
 #sudo apt-get -qq update
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd libapache2-mod-php5 php5-cli php5-mysql \
+php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb
 
 #Configure Git
 echo "Input your Git user.name"
@@ -24,11 +25,20 @@ sudo pear install -f --alldeps pear.phpunit.de/PHPUnit
 
 # Install Composer
 curl -s https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer.phar
+sudo mv composer.phar /usr/local/bin/composer
 
 #Install Java
 sudo apt-get install default-jdk default-jdk-doc default-jre default-jre-headless tomcat7 tomcat7-admin -y &&
 update-alternatives --display java
+
+#Install Mysql server and client
+sudo apt-get install -y mysql-server
+
+#Install MongoDB
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list &&
+sudo apt-get update &&
+sudo apt-get install mongodb-10gen
 
 #Install Sublime
 sudo add-apt-repository ppa:webupd8team/sublime-text-3 -y
