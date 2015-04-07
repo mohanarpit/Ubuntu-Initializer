@@ -6,11 +6,11 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &
 sudo dpkg -i google-chrome*.deb
 rm google-chrome*.deb 
 sudo apt-get update &&
-sudo apt-get install google-chrome-stable
+sudo apt-get install libappindicator1 libappindicator7 google-chrome-stable
 
 #sudo apt-get -qq update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd php5 libapache2-mod-php5 php5-cli php5-mysql \
-php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion libappindicator1 libappindicator7
+php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion
 
 #Configure Git
 echo "Input your Git user.name"
