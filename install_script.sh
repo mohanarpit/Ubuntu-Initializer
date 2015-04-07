@@ -10,7 +10,7 @@ sudo apt-get install google-chrome-stable
 
 #sudo apt-get -qq update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd php5 libapache2-mod-php5 php5-cli php5-mysql \
-php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion
+php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion libappindicator1 libappindicator7
 
 #Configure Git
 echo "Input your Git user.name"
