@@ -9,7 +9,7 @@ sudo apt-get update &&
 sudo apt-get install google-chrome-stable
 
 #sudo apt-get -qq update
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd libapache2-mod-php5 php5-cli php5-mysql \
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd php5 libapache2-mod-php5 php5-cli php5-mysql \
 php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion
 
 #Configure Git
