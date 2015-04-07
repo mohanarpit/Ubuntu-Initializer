@@ -58,12 +58,12 @@ mkdir -p ~/projects/
 mkdir -p ~/.ec2/
 mkdir -p ~/projects/vagrant
 
-cd ~/projects/vagrant (
-		wget http://files.vagrantup.com/packages/a40522f5fabccb9ddabad03d836e120ff5d14093/vagrant_1.3.5_x86_64.deb
-		sudo apt-get install virtualbox dkms virtualbox-guest-additions-iso -y
-		sudo dpkg -i vagrant_1.3.5_x86_64.deb
-		rm vagrant_1.3.5_x86_64.deb
-	)
+(cd ~/projects/vagrant && 
+	wget http://files.vagrantup.com/packages/a40522f5fabccb9ddabad03d836e120ff5d14093/vagrant_1.3.5_x86_64.deb
+	sudo apt-get install virtualbox dkms virtualbox-guest-additions-iso -y
+	sudo dpkg -i vagrant_1.3.5_x86_64.deb
+	rm vagrant_1.3.5_x86_64.deb
+)
 
 #Install utilities 
 sudo apt-get install git-flow
