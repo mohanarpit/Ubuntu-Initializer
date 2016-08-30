@@ -1,16 +1,8 @@
 #!/bin/bash
 
-#Install Chrome
-sudo apt-get install -y libxss1 &&  
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
-sudo dpkg -i google-chrome*.deb
-rm google-chrome*.deb 
-sudo apt-get update &&
-sudo apt-get install libappindicator1 libappindicator7 google-chrome-stable
-
-#sudo apt-get -qq update
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -qq -y s3cmd php5 libapache2-mod-php5 php5-cli php5-mysql \
-php5-mcrypt php5-curl php-pear curl git sqlite php5-sqlite php5-json git-flow python-mysqldb subversion ant maven
+#Install the wireless drivers
+sudo apt update
+sudo apt install -y bcmwl-kernel-source
 
 #Configure Git
 echo "Input your Git user.name"
@@ -18,53 +10,74 @@ read GIT_USER_NAME
 echo "Input your Git user.email"
 read GIT_USER_EMAIL
 
-# Install PHPUnit
-sudo pear upgrade-all
-sudo pear config-set auto_discover 1
-sudo pear install -f --alldeps pear.phpunit.de/PHPUnit
+#Install Chrome
+sudo apt install -y  libappindicator1 libindicator7 libpango1.0-0 libpangox-1.0-0
+sudo apt install -y libxss1 &&  
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
+sudo dpkg -i google-chrome*.deb
+rm google-chrome*.deb 
+sudo apt update 
 
-# Install Composer
-curl -s https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
+#Create the directories
+mkdir -p /code/third-party
+
+#sudo apt -qq update
+DEBIAN_FRONTEND=noninteractive sudo apt install -qq -y php libapache2-mod-php php-mysql \
+php-mcrypt php-curl php-pear curl git git-core sqlite php-sqlite php-json python-mysqldb subversion ant maven golang-go \
+build-essential libssl-dev libffi-dev python-dev
+
+git config --global user.name $GIT_USER_NAME
+git config --global user.email $GIT_USER_EMAIL
 
 #Install Java
-sudo apt-get install default-jdk default-jdk-doc default-jre default-jre-headless tomcat7 tomcat7-admin -y &&
+sudo apt install default-jdk default-jdk-doc default-jre default-jre-headless -y &&
 update-alternatives --display java
 
+#Install Tomcat server
+wget -O /code/third-party/apache-tomcat-8.5.4.tgz http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.4/bin/apache-tomcat-8.5.4.tar.gz
+mkdir -p /code/tomcat/
+tar -xvzf /code/third-party/apache-tomcat-8.5.4.tgz -C /code/tomcat --strip-components=1
+
+#Install Apache2 server
+sudo apt install -y apache2
+
 #Install Mysql server and client
-sudo apt-get install -y mysql-server
+sudo apt install -y mysql-server
 
-#Install MongoDB
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list &&
-sudo apt-get update &&
-sudo apt-get install mongodb-10gen
+#Install nodejs
+sudo apt install -y nodejs npm
 
-#Install Sublime
-sudo add-apt-repository ppa:webupd8team/sublime-text-3 -y
-sudo apt-get update
-sudo apt-get install sublime-text-installer
+#Install Atom 
+wget -O /code/third-party/atom-amd64.deb https://atom.io/download/deb
+sudo dpkg -i /code/third-party/atom-amd64.deb
+sudo apt install -f
+
+#Install Zsh & oh-my-zsh
+sudo apt install -y zsh
+wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
+chsh -s `which zsh`
+
+#Install Docker 
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo sh -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list'
+sudo apt update
+sudo apt install -y linux-image-extra-$(uname -r)
+sudo apt install -y docker-engine
 
 #Create private-public keypair if doesn't already exist
 if [ ! -f ~/.ssh/id_rsa ]; 
 	then ssh-keygen -t rsa ; 
 fi
 
-git config --global user.name $GIT_USER_NAME
-git config --global user.email $GIT_USER_EMAIL
-
-#Create a projects folder in the user's home directory. This is where all the projects will be cloned
-mkdir -p ~/projects/
-mkdir -p ~/.ec2/
-mkdir -p ~/projects/vagrant
-
-(cd ~/projects/vagrant && 
-	wget http://files.vagrantup.com/packages/a40522f5fabccb9ddabad03d836e120ff5d14093/vagrant_1.3.5_x86_64.deb
-	sudo apt-get install virtualbox dkms virtualbox-guest-additions-iso -y
-	sudo dpkg -i vagrant_1.3.5_x86_64.deb
-	rm vagrant_1.3.5_x86_64.deb
-)
-
 #Install utilities 
-sudo apt-get install git-flow
-sudo apt-get install autojump
+sudo apt install -y tmux
+sudo apt install -y exfat-fuse exfat-utils
+sudo apt install -y vim
+sudo apt install -y openssh-server fail2ban 
+sudo apt install -y jq
+
+#Install Ansible
+sudo apt install -y python-pip
+sudo pip install paramiko PyYAML Jinja2 httplib2 six ansible
