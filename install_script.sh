@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Install the wireless drivers
-sudo apt update
+sudo apt update -y
 sudo apt install -y bcmwl-kernel-source
 
 #Configure Git
